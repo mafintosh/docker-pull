@@ -1,0 +1,28 @@
+{
+  "name": "docker-pull",
+  "version": "0.0.0",
+  "description": "WIP - nothing to see here",
+  "main": "index.js",
+  "dependencies": {
+    "minimist": "^1.1.0",
+    "pretty-bytes": "^1.0.1",
+    "pump": "^1.0.0",
+    "single-line-log": "^0.4.1",
+    "through-json": "^1.1.0",
+    "through2": "^0.6.3"
+  },
+  "devDependencies": {},
+  "bin": {
+    "docker-pull": "./bin.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mafintosh/docker-pull.git"
+  },
+  "author": "Mathias Buus (@mafintosh)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mafintosh/docker-pull/issues"
+  },
+  "homepage": "https://github.com/mafintosh/docker-pull"
+}

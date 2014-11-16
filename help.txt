@@ -1,0 +1,6 @@
+Usage: docker-pull [image] [options]
+
+  --host,      -H   [docker-host]
+  --username   -u   [registry-username]
+  --password   -p   [registry-password]
+  --version

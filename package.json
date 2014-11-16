@@ -4,6 +4,8 @@
   "description": "Pull a docker image from a registry using node",
   "main": "index.js",
   "dependencies": {
+    "docker-parse-image": "^3.0.1",
+    "docker-remote-api": "^4.4.0",
     "minimist": "^1.1.0",
     "pretty-bytes": "^1.0.1",
     "pump": "^1.0.0",

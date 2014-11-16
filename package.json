@@ -1,7 +1,7 @@
 {
   "name": "docker-pull",
   "version": "0.0.0",
-  "description": "WIP - nothing to see here",
+  "description": "Pull a docker image from a registry using node",
   "main": "index.js",
   "dependencies": {
     "minimist": "^1.1.0",

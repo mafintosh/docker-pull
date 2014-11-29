@@ -1,6 +1,6 @@
 {
   "name": "docker-pull",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Pull a docker image from a registry using node",
   "main": "index.js",
   "dependencies": {

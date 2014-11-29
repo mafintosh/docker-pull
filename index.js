@@ -44,8 +44,7 @@ var pull = function(image, opts, cb) {
 
   var post = request.post('/images/create', {
     qs: {
-      fromImage: image.name,
-      repo: image.repository || '',
+      fromImage: (image.namespace ? image.namespace + '/' : '') + image.repository,
       tag: image.tag || 'latest',
       registry: image.registry || ''
     },

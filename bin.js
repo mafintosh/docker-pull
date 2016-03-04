@@ -9,14 +9,13 @@ var minimist = require('minimist')
 var path = require('path')
 var url = require('url')
 
+var cfg = {}
 try {
-  var cfg = JSON.parse(fs.readFileSync(path.join(process.env.HOME || process.env.USERPROFILE, '.dockercfg'), 'utf-8'))
-} catch (err) {
-  var cfg = {}
-}
+  cfg = JSON.parse(fs.readFileSync(path.join(process.env.HOME || process.env.USERPROFILE, '.dockercfg'), 'utf-8'))
+} catch (err) {}
 
 var argv = minimist(process.argv.slice(2), {
-  alias:{host:'H', password:'p', username:'u'}
+  alias: {host: 'H', password: 'p', username: 'u'}
 })
 
 var image = argv._[0]
@@ -33,7 +32,7 @@ if (!image) {
 
 if (!argv.username) {
   var registry = parse(image).registry || 'index.docker.io'
-  Object.keys(cfg).forEach(function(addr) {
+  Object.keys(cfg).forEach(function (addr) {
     if (url.parse(addr).host !== registry) return
     var auth = new Buffer(cfg[addr].auth, 'base64').toString().split(':')
     argv.username = auth.shift()
@@ -43,17 +42,17 @@ if (!argv.username) {
 
 var p = pull(image, argv)
 
-var print = function() {
+var print = function () {
   log(
-    'Pulling '+p.image+'\n'+
-    'Fetched '+p.layers+' '+(p.transferred ? '('+pretty(p.transferred)+'/'+pretty(p.length)+') ' : '')+'new image layer'+(p.layers !== 1 ? 's' : '')+'\n'
+    'Pulling ' + p.image + '\n' +
+    'Fetched ' + p.layers + ' ' + (p.transferred ? '(' + pretty(p.transferred) + '/' + pretty(p.length) + ') ' : '') + 'new image layer' + (p.layers !== 1 ? 's' : '') + '\n'
   )
 }
 
 print()
 p.on('progress', print)
 
-p.on('error', function(err) {
-  console.log('Error: '+err.message)
+p.on('error', function (err) {
+  console.log('Error: ' + err.message)
   process.exit(2)
 })

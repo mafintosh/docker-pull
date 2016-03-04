@@ -3,6 +3,9 @@
   "version": "1.0.2",
   "description": "Pull a docker image from a registry using node",
   "main": "index.js",
+  "scripts": {
+    "test": "standard"
+  },
   "dependencies": {
     "docker-parse-image": "^3.0.1",
     "docker-remote-api": "^4.4.0",
@@ -13,7 +16,9 @@
     "through-json": "^1.1.0",
     "through2": "^0.6.3"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "standard": "^6.0.7"
+  },
   "bin": {
     "docker-pull": "./bin.js"
   },

@@ -5,14 +5,14 @@ var through = require('through2')
 var events = require('events')
 var pump = require('pump')
 
-var pull = function(image, opts, cb) {
+var pull = function (image, opts, cb) {
   if (typeof opts === 'function') return pull(image, null, opts)
   if (!opts) opts = {}
 
   image = parse(image)
   if (!image) throw new Error('Invalid image')
 
-  var request = docker(opts.host, {version:'v1.15'})
+  var request = docker(opts.host, {version: opts.version || 'v1.15'})
   var that = new events.EventEmitter()
   var layers = {}
   var progress = {}
@@ -23,7 +23,7 @@ var pull = function(image, opts, cb) {
   progress.transferred = that.transferred = 0
   progress.length = that.length = 0
 
-  var write = function(data, enc, cb) {
+  var write = function (data, enc, cb) {
     if (data.error) return cb(new Error(data.error.trim()))
     if (!data.id || !data.progressDetail || !data.progressDetail.current) return cb()
 
@@ -36,7 +36,7 @@ var pull = function(image, opts, cb) {
     var cur = data.progressDetail.current
     progress.transferred = that.transferred = that.transferred + (cur - layers[data.id])
     layers[data.id] = cur
-    
+
     that.emit('progress', progress)
 
     cb()
@@ -56,16 +56,16 @@ var pull = function(image, opts, cb) {
       }
     },
     body: null
-  }, function(err, response) {
+  }, function (err, response) {
     if (err) return that.emit('error', err)
 
-    pump(response, throughJSON(), through.obj(write), function(err) {
+    pump(response, throughJSON(), through.obj(write), function (err) {
       if (err) return that.emit('error', err)
       that.emit('end')
     })
   })
 
-  that.destroy = function() {
+  that.destroy = function () {
     post.destroy()
   }
 

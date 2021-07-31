@@ -12,7 +12,7 @@ var pull = function (image, opts, cb) {
   image = parse(image)
   if (!image) throw new Error('Invalid image')
 
-  var request = docker(opts.host, {version: opts.version || 'v1.15'})
+  var request = docker({host: opts.host, version: opts.version || 'v1.15'})
   var that = new events.EventEmitter()
   var layers = {}
   var progress = {}

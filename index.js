@@ -12,7 +12,7 @@ var pull = function (image, opts, cb) {
   image = parse(image)
   if (!image) throw new Error('Invalid image')
 
-  var request = docker({host: opts.host, version: opts.version || 'v1.15'})
+  var request = docker({host: opts.host, version: opts.version || 'v1.21'})
   var that = new events.EventEmitter()
   var layers = {}
   var progress = {}
@@ -42,11 +42,20 @@ var pull = function (image, opts, cb) {
     cb()
   }
 
+  var fromImage = image.repository
+
+  if (image.namespace) {
+    fromImage = image.namespace + '/' + fromImage
+  }
+
+  if (image.registry) {
+    fromImage = image.registry + '/' + fromImage
+  }
+
   var post = request.post('/images/create', {
     qs: {
-      fromImage: (image.namespace ? image.namespace + '/' : '') + image.repository,
-      tag: image.tag || 'latest',
-      registry: image.registry || ''
+      fromImage: fromImage,
+      tag: image.tag || 'latest'
     },
     headers: {
       'X-Registry-Auth': {
